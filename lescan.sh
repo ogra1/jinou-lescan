@@ -2,7 +2,13 @@
 
 clear
 
-ADDR="F0 F1 FB E0 CE D6"
+ADDR="$(snapctl get mac)"
+
+if [ -z "$ADDR" ]; then
+	echo "can not find a MAC address, please configure the snap with"
+	echo "sudo snap set $SNAP_NAME mac=\"XX XX XX XX XX XX\""
+	echo "with the MAC address of the sensor you want to monitor"
+fi
 
 cleanup(){
   kill -9 $HCI_PID >/dev/null 2>&1 || true
